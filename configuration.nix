@@ -1,12 +1,12 @@
-{ config, pkgs, ...}: 
+{ config, pkgs, lib, ... }:
 {
 	imports = [ ./hardware-configuration.nix ];
-	
+
 	# BOOTLOADER
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
-	boot.loader.efi.efiSysMountPoint = "/boot";	
-	
+	boot.loader.efi.efiSysMountPoint = "/boot";
+
 	boot.initrd.systemd.enable = true;
 	boot.initrd.kernelModules = [ "btrfs" ];
 	boot.initrd.supportedFilesystems = [ "btrfs" ];
@@ -26,20 +26,31 @@
 		script = ''
 			mkdir -p /mnt-rollback
 			mount -t btrfs -o subvol=/ /dev/nvme0n1p3 /mnt-rollback
-			if [ -e /mnt-rollback/@ ]; then	
+			if [ -e /mnt-rollback/@ ]; then
 				btrfs subvolume list -o /mnt-rollback/@ | cut -f9 -d' ' | while read subvolume; do
 					echo "Deleting /$subvolume subvolume..."
 					btrfs subvolume delete "/mnt-rollback/$subvolume"
-				done 			
+				done
 				echo "Deleting /@ subvolume..."
 				btrfs subvolume delete /mnt-rollback/@
 			fi
 			echo "Restoring blank /@ subvolume..."
 			btrfs subvolume snapshot /mnt-rollback/@-blank /mnt-rollback/@
-
 			umount /mnt-rollback
-			'';
+		'';
 	};
+
+	# IMPERMANENCE
+	programs.fuse.userAllowOther = true;
+
+	users.mutableUsers = lib.mkForce false;
+	users.users.aron = {
+		isNormalUser = true;
+		extraGroups = [ "wheel" "networkmanager" "docker" ];
+		shell = pkgs.zsh;
+		hashedPasswordFile = "/persist/passwords/aron";
+	};
+	users.users.root.hashedPasswordFile = "/persist/passwords/root";
 
 	environment.persistence."/persist" = {
 		hideMounts = true;
@@ -47,10 +58,11 @@
 			"/etc/nixos"
 			"/etc/NetworkManager/system-connections"
 			"/var/lib/bluetooth"
-			"/var/lib/systemd/coredump"
+			"/var/lib/systemd"
 			"/var/lib/nixos"
 			"/var/lib/docker"
-			"/root" 
+			"/var/lib/NetworkManager"
+			"/root"
 		];
 		files = [
 			"/etc/machine-id"
@@ -59,20 +71,20 @@
 			"/etc/ssh/ssh_host_rsa_key.pub"
 			"/etc/ssh/ssh_host_ed25519_key"
 			"/etc/ssh/ssh_host_ed25519_key.pub"
-			"/etc/shadow"
-			"/etc/group"
-			"/etc/passwd"
-			"/etc/gshadow"
-			"/etc/subuid"
-			"/etc/subgid"
 		];
+		users.aron = {
+			directories = [
+				"Downloads"
+				"Documents"
+				".ssh"
+				".local/share/keyrings"
+				".config/nvim"
+			];
+			files = [
+				".zsh_history"
+			];
+		};
 	};
-
-	systemd.tmpfiles.rules = [
-		"L /var/lib/NetworkManager/secret_key - - - - /persist/var/lib/NetworkManager/secret_key"
-		"L /var/lib/NetworkManager/seen-bssids - - - - /persist/var/lib/NetworkManager/seen-bssids"
-		"L /var/lib/NetworkManager/timestamps - - - - /persist/var/lib/NetworkManager/timestamps"
-	];
 
 	# NETWORKING
 	networking.hostName = "hiroshima";
@@ -90,7 +102,7 @@
 		powerManagement.finegrained = true;
 		open = false;
 		nvidiaSettings = true;
-	 	prime = {
+		prime = {
 			offload = {
 				enable = true;
 				enableOffloadCmd = true;
@@ -100,13 +112,6 @@
 		};
 	};
 	services.xserver.videoDrivers = [ "nvidia" ];
-
-	# USERS
-	users.users.aron = {
-		isNormalUser = true;
-		extraGroups = ["wheel" "networkmanager" "docker"];
-		shell = pkgs.zsh;
-	};
 
 	# SYSTEM SERVICES
 	zramSwap.enable = true;
@@ -118,7 +123,7 @@
 		alsa.support32Bit = true;
 		pulse.enable = true;
 	};
-	
+
 	# SYSTEM PACKAGES
 	environment.systemPackages = with pkgs; [
 		git
@@ -135,19 +140,10 @@
 	security.sudo.extraConfig = ''
 		Defaults lecture = never
 	'';
-	
+
 	# NIX SETTINGS
-	nix.settings.experimental-features = ["nix-command" "flakes"];
+	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nixpkgs.config.allowUnfree = true;
 
-	system.stateVersion = "25.11";
-
+	system.stateVersion = "24.11";
 }
-
-
-
-
-
-
-
-

@@ -1,26 +1,11 @@
 { config, pkgs, inputs, ... }:
 {
-	imports = [ inputs.impermanence.homeManagerModules.impermanence ];
-
 	home.username = "aron";
 	home.homeDirectory = "/home/aron";
 
 	home.packages = with pkgs; [
 
 	];
-
-	home.persistence."/persist/home" = {
-		directories = [
-			"Downloads"
-			"Documents"
-			".ssh"
-			".local/share/keyrings"
-			".config/nvim"
-		];
-		files = [
-			".zsh_history"
-		];
-	};
 
 	programs.zsh = {
 		enable = true;
@@ -36,5 +21,5 @@
 
 	programs.home-manager.enable = true;
 
-	home.stateVersion = "25.11";
+	home.stateVersion = "24.11";
 }
