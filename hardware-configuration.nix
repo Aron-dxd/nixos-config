@@ -14,35 +14,36 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/7845bc99-b717-420f-9d4e-1045c5a3b9b2";
+    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
+      options = [ "subvol=@" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/7845bc99-b717-420f-9d4e-1045c5a3b9b2";
+    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
       fsType = "btrfs";
-      options = [ "subvol=@home" ];
-    };
-
-  fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/7845bc99-b717-420f-9d4e-1045c5a3b9b2";
-      fsType = "btrfs";
-      options = [ "subvol=@persist" ];
+      options = [ "subvol=@home" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/7845bc99-b717-420f-9d4e-1045c5a3b9b2";
+    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
       fsType = "btrfs";
-      options = [ "subvol=@log" ];
+      options = [ "subvol=@log" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/7845bc99-b717-420f-9d4e-1045c5a3b9b2";
+  fileSystems."/persist" =
+    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
       fsType = "btrfs";
-      options = [ "subvol=@nix" ];
+      options = [ "subvol=@persist" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
     };
 
   fileSystems."/boot" =

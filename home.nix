@@ -1,6 +1,6 @@
 { config, pkgs, inputs, ... }:
 {
-	imports = [ inputs.impermanence.nixosModules.home-manager.impermanence ];
+	imports = [ inputs.impermanence.homeManagerModules.impermanence ];
 
 	home.username = "aron";
 	home.homeDirectory = "/home/aron";
@@ -9,7 +9,7 @@
 
 	];
 
-	home.persistence."/persist/home/aron" = {
+	home.persistence."/persist/home" = {
 		directories = [
 			"Downloads"
 			"Documents"
@@ -20,7 +20,6 @@
 		files = [
 			".zsh_history"
 		];
-		allowOther = true;
 	};
 
 	programs.zsh = {

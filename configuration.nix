@@ -131,7 +131,6 @@
 	];
 
 	programs.zsh.enable = true;
-	programs.fuse.userAllowOther = true;	
 
 	security.sudo.extraConfig = ''
 		Defaults lecture = never
