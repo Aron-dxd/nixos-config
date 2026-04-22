@@ -14,35 +14,36 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
+    { device = "/dev/disk/by-uuid/c4cb9bc1-5682-409e-8539-f894835f5d65";
       fsType = "btrfs";
       options = [ "subvol=@" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
-      fsType = "btrfs";
-      options = [ "subvol=@nix" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
-    };
-
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
+    { device = "/dev/disk/by-uuid/c4cb9bc1-5682-409e-8539-f894835f5d65";
       fsType = "btrfs";
       options = [ "subvol=@home" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/c4cb9bc1-5682-409e-8539-f894835f5d65";
       fsType = "btrfs";
-      options = [ "subvol=@log" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      options = [ "subvol=@nix" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 
   fileSystems."/persist" =
-    { device = "/dev/disk/by-uuid/8379959b-1d18-4ba2-9a12-d6177a5cf7ea";
+    { device = "/dev/disk/by-uuid/c4cb9bc1-5682-409e-8539-f894835f5d65";
       fsType = "btrfs";
       options = [ "subvol=@persist" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
+    };
+
+  fileSystems."/var/log" =
+    { device = "/dev/disk/by-uuid/c4cb9bc1-5682-409e-8539-f894835f5d65";
+      fsType = "btrfs";
+      options = [ "subvol=@log" "compress=zstd:3" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 

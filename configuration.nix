@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 {
-	imports = [ ./hardware-configuration.nix ];
+	imports = [
+		./hardware-configuration.nix
+		./impermanence.nix
+	];
 
 	# BOOTLOADER
 	boot.loader.systemd-boot.enable = true;
@@ -10,11 +13,11 @@
 	boot.initrd.systemd.enable = true;
 	boot.initrd.kernelModules = [ "btrfs" ];
 	boot.initrd.supportedFilesystems = [ "btrfs" ];
-	boot.initrd.systemd.initrdBin = with pkgs; [
-		busybox
-		btrfs-progs
-		coreutils
-	];
+	#boot.initrd.systemd.initrdBin = with pkgs; [
+	#	busybox
+	#	btrfs-progs
+	#	coreutils
+	#];
 	boot.initrd.systemd.services.rollback = {
 		description = "Rollback BTRFS root subvolume to empty state";
 		wantedBy = [ "initrd.target" ];
@@ -36,55 +39,26 @@
 			fi
 			echo "Restoring blank /@ subvolume..."
 			btrfs subvolume snapshot /mnt-rollback/@-blank /mnt-rollback/@
+			if [ -e /mnt-rollback/@home ]; then
+				echo "Deleting /@home subvolume..."
+				btrfs subvolume delete /mnt-rollback/@home
+			fi
+			echo "Restoring blank /@home subvolume..."
+			btrfs subvolume snapshot /mnt-rollback/@home-blank /mnt-rollback/@home
 			umount /mnt-rollback
 		'';
 	};
 
-	# IMPERMANENCE
-	programs.fuse.userAllowOther = true;
-
+	# USERS
 	users.mutableUsers = lib.mkForce false;
 	users.users.aron = {
 		isNormalUser = true;
 		extraGroups = [ "wheel" "networkmanager" "docker" ];
 		shell = pkgs.zsh;
+		#initialPassword = "aron";
 		hashedPasswordFile = "/persist/passwords/aron";
 	};
 	users.users.root.hashedPasswordFile = "/persist/passwords/root";
-
-	environment.persistence."/persist" = {
-		hideMounts = true;
-		directories = [
-			"/etc/nixos"
-			"/etc/NetworkManager/system-connections"
-			"/var/lib/bluetooth"
-			"/var/lib/systemd"
-			"/var/lib/nixos"
-			"/var/lib/docker"
-			"/var/lib/NetworkManager"
-			"/root"
-		];
-		files = [
-			"/etc/machine-id"
-			"/etc/adjtime"
-			"/etc/ssh/ssh_host_rsa_key"
-			"/etc/ssh/ssh_host_rsa_key.pub"
-			"/etc/ssh/ssh_host_ed25519_key"
-			"/etc/ssh/ssh_host_ed25519_key.pub"
-		];
-		users.aron = {
-			directories = [
-				"Downloads"
-				"Documents"
-				".ssh"
-				".local/share/keyrings"
-				".config/nvim"
-			];
-			files = [
-				".zsh_history"
-			];
-		};
-	};
 
 	# NETWORKING
 	networking.hostName = "hiroshima";
@@ -145,5 +119,5 @@
 	nix.settings.experimental-features = [ "nix-command" "flakes" ];
 	nixpkgs.config.allowUnfree = true;
 
-	system.stateVersion = "24.11";
+	system.stateVersion = "25.11";
 }

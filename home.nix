@@ -15,11 +15,11 @@
 
 	programs.git = {
 		enable = true;
-		userName = "Aron-dxd";
-		userEmail = "aronthomas019+github@gmail.com";
+		settings.user.name = "Aron-dxd";
+		settings.user.email = "aronthomas019+github@gmail.com";
 	};
 
 	programs.home-manager.enable = true;
 
-	home.stateVersion = "24.11";
+	home.stateVersion = "25.11";
 }
