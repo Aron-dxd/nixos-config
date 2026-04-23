@@ -29,6 +29,7 @@
 				".ssh"
 				".local/share/keyrings"
 				".config/nvim"
+				".config/hypr"
 			];
 			files = [
 				".zsh_history"

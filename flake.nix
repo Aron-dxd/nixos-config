@@ -8,15 +8,21 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-
+		
+		noctalia = {
+			url = "github:noctalia-dev/noctalia-shell";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 		impermanence.url = "github:nix-community/impermanence";
 	};
 
 	outputs = { self, nixpkgs, home-manager, impermanence, ... }@inputs: {
 		nixosConfigurations.hiroshima = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
+			specialArgs = { inherit inputs; };
 			modules = [
 				./configuration.nix
+				./noctalia.nix
 				impermanence.nixosModules.impermanence
 				home-manager.nixosModules.home-manager
 				{

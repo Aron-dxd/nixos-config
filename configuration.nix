@@ -10,14 +10,11 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.loader.efi.efiSysMountPoint = "/boot";
 
+	boot.kernelParams = [ "nvidia-dms.modeset=1" ];
+
 	boot.initrd.systemd.enable = true;
 	boot.initrd.kernelModules = [ "btrfs" ];
 	boot.initrd.supportedFilesystems = [ "btrfs" ];
-	#boot.initrd.systemd.initrdBin = with pkgs; [
-	#	busybox
-	#	btrfs-progs
-	#	coreutils
-	#];
 	boot.initrd.systemd.services.rollback = {
 		description = "Rollback BTRFS root subvolume to empty state";
 		wantedBy = [ "initrd.target" ];
@@ -55,7 +52,6 @@
 		isNormalUser = true;
 		extraGroups = [ "wheel" "networkmanager" "docker" ];
 		shell = pkgs.zsh;
-		#initialPassword = "aron";
 		hashedPasswordFile = "/persist/passwords/aron";
 	};
 	users.users.root.hashedPasswordFile = "/persist/passwords/root";
@@ -85,6 +81,9 @@
 			nvidiaBusId = "PCI:1:0:0";
 		};
 	};
+	hardware.bluetooth.enable = true;
+	services.upower.enable = true;
+	services.power-profiles-daemon.enable = true;
 	services.xserver.videoDrivers = [ "nvidia" ];
 
 	# SYSTEM SERVICES
@@ -110,13 +109,34 @@
 	];
 
 	programs.zsh.enable = true;
+	programs.hyprland = {
+		enable = true;
+		xwayland.enable = true;
+	};
+
+	environment.sessionVariables = {
+		NIXOS_OZONE_WL = "1";
+		WLR_NO_HARDWARE_CURSORS = "1";
+		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+		LIBVA_DRIVER_NAME = "nvidia";
+		GBM_BACKEND = "nvidia-drm";
+	};
 
 	security.sudo.extraConfig = ''
 		Defaults lecture = never
 	'';
 
 	# NIX SETTINGS
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nix.gc = {
+		automatic = true;
+		dates = "weekly";
+		options = "--delete-older-than 3d";
+	};
+	nix.settings = {
+		experimental-features = [ "nix-command" "flakes" ];
+		auto-optimise-store = true;
+	};
+
 	nixpkgs.config.allowUnfree = true;
 
 	system.stateVersion = "25.11";
