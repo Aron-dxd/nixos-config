@@ -22,7 +22,6 @@
 			specialArgs = { inherit inputs; };
 			modules = [
 				./configuration.nix
-				./noctalia.nix
 				impermanence.nixosModules.impermanence
 				home-manager.nixosModules.home-manager
 				{
