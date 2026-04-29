@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
 	imports = [
 		./hardware-configuration.nix
@@ -10,7 +10,8 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.loader.efi.efiSysMountPoint = "/boot";
 
-	boot.kernelParams = [ "nvidia-dms.modeset=1" ];
+	boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+	boot.kernelPackages = pkgs.linuxPackages_latest;	
 
 	boot.initrd.systemd.enable = true;
 	boot.initrd.kernelModules = [ "btrfs" ];
@@ -87,6 +88,8 @@
 	services.xserver.videoDrivers = [ "nvidia" ];
 
 	# SYSTEM SERVICES
+	services.cloudflare-warp.enable = true;
+
 	zramSwap.enable = true;
 	zramSwap.algorithm = "zstd";
 
@@ -95,6 +98,17 @@
 		alsa.enable = true;
 		alsa.support32Bit = true;
 		pulse.enable = true;
+	};
+	
+	services.sysc-greet = {
+		enable = true;
+		compositor = "hyprland";
+	};
+
+	xdg.portal = {
+		enable = true;
+		extraPortals = [ pkgs.xdg-desktop-portal-hyprland  pkgs.xdg-desktop-portal-gtk ];
+		config.common.default = [ "hyprland" "gtk" ];
 	};
 
 	# SYSTEM PACKAGES
@@ -106,6 +120,9 @@
 		btop
 		pciutils
 		usbutils
+		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+		keepassxc
+		cloudflare-warp
 	];
 
 	programs.zsh.enable = true;
@@ -120,6 +137,11 @@
 		__GLX_VENDOR_LIBRARY_NAME = "nvidia";
 		LIBVA_DRIVER_NAME = "nvidia";
 		GBM_BACKEND = "nvidia-drm";
+		
+		XDG_CONFIG_HOME = "$HOME/.config";
+		XDG_DATA_HOME = "$HOME/.local/share";
+		XDG_CACHE_HOME = "$HOME/.cache";
+		XDG_STATE_HOME = "$HOME/.local/state";
 	};
 
 	security.sudo.extraConfig = ''

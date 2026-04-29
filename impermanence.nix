@@ -26,13 +26,19 @@
 			directories = [
 				"Downloads"
 				"Documents"
+				"Pictures"
+				"Videos"
 				".ssh"
 				".local/share/keyrings"
-				".config/nvim"
-				".config/hypr"
+				".local/share/nvim"
+				".local/state/wireplumber"
+				".local/share/yazi"
+				".cache/noctalia"
+				".config/noctalia"
+				".zen"
 			];
 			files = [
-				".zsh_history"
+				".config/zsh/.zsh_history"
 			];
 		};
 	};

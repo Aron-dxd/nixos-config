@@ -1,44 +1,49 @@
 { config, pkgs, inputs, ... }:
 {
-	imports = [ ./noctalia.nix ];	
-	
+	imports = [
+		./noctalia.nix
+		./hyprland.nix
+		./xdg.nix
+	];
+
 	home.username = "aron";
 	home.homeDirectory = "/home/aron";
 
 	home.packages = with pkgs; [
 		kitty
+		neovim
+		wl-clipboard
+		wtype
+		satty
+		gpu-screen-recorder
+		brightnessctl
+		playerctl
+		rose-pine-cursor
+		mpv
+		thunar
+		yazi
+		imv
+		jq
+		fastfetch
+		fzf
+		yt-dlp
+		ffmpeg
 	];
-	
-	wayland.windowManager.hyprland = {
-		enable = true;
-		settings = {
-			monitor = [ ",preferred,auto,1" ];
-			exec-once = [ "kitty" ];
-	
-			input = {
-				kb_layout = "us";
-				touchpad.natural_scroll = true;
-			};
 
-			"$mod" = "SUPER";
-		
-			bind = [
-				"$mod, Return, exec, kitty"
-				"$mod, Q, killactive"
-				"$mod, M,  exit"
-			];	
-		};
+	home.sessionVariables = {
+		EDITOR = "nvim";
+		VISUAL = "nvim";
 	};
-	
+
 	programs.zsh = {
 		enable = true;
+		dotDir = "${config.xdg.configHome}/zsh";
 		autosuggestion.enable = true;
 		syntaxHighlighting.enable = true;
-		profileExtra = ''
-			if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
-				exec start-hyprland
-			fi
-		'';
+
+		shellAliases = {
+		    rebuild = "cd /etc/nixos && sudo nixos-rebuild switch --flake .#hiroshima";
+		};
 	};
 
 	programs.git = {
