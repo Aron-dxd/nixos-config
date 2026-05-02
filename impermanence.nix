@@ -10,7 +10,7 @@
 			"/var/lib/nixos"
 			"/var/lib/docker"
 			"/var/lib/NetworkManager"
-			"/var/cache/sysc-greet"
+			"/var/cache/tuigreet"
 			"/root"
 		];
 		files = [
@@ -40,7 +40,6 @@
 				".config/zsh"
 				".config/gtk-3.0"
 				".config/gtk-4.0"
-				".config/sysc-greet"
 				".config/KeePassXC"
 				".cache/noctalia"
 				".zen"

@@ -67,7 +67,7 @@
 			autosuggestion.enable = true;
 			syntaxHighlighting.enable = true;
 			shellAliases = {
-				rebuild = "cd /etc/nixos && sudo nixos-rebuild switch --flake .#hiroshima";
+				rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
 			};
 		};
 		git = {
