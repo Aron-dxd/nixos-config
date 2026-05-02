@@ -25,9 +25,11 @@
 			url = "github:Nomadcxx/sysc-greet";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-	};
+		
+		catppuccin.url = "github:catppuccin/nix";
+ 	};
 
-	outputs = { self, nixpkgs, home-manager, impermanence, sysc-greet, ... }@inputs: {
+	outputs = { self, nixpkgs, home-manager, impermanence, sysc-greet, catppuccin, ... }@inputs: {
 		nixosConfigurations.hiroshima = nixpkgs.lib.nixosSystem {
 			system = "x86_64-linux";
 			specialArgs = { inherit inputs; };
@@ -35,12 +37,17 @@
 				./configuration.nix
 				impermanence.nixosModules.impermanence
 				sysc-greet.nixosModules.default
-				home-manager.nixosModules.home-manager
+				home-manager.nixosModules.default
 				{
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
 					home-manager.extraSpecialArgs = { inherit inputs; };
-					home-manager.users.aron = import ./home.nix;
+					home-manager.users.aron = {
+						imports = [
+							catppuccin.homeModules.catppuccin	
+							./home.nix
+						];
+					};
 				}
 			];
 		};

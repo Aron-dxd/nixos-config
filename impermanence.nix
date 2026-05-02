@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-	programs.fuse.userAllowOther = true;
-
 	environment.persistence."/persist" = {
 		hideMounts = true;
 		directories = [
@@ -12,6 +10,7 @@
 			"/var/lib/nixos"
 			"/var/lib/docker"
 			"/var/lib/NetworkManager"
+			"/var/cache/sysc-greet"
 			"/root"
 		];
 		files = [
@@ -31,14 +30,23 @@
 				".ssh"
 				".local/share/keyrings"
 				".local/share/nvim"
-				".local/state/wireplumber"
 				".local/share/yazi"
-				".cache/noctalia"
+				".local/share/gnupg"
+				".local/share/applications"
+				".config/nvim"
 				".config/noctalia"
+				".config/yazi"
+				".config/kitty"
+				".config/zsh"
+				".config/gtk-3.0"
+				".config/gtk-4.0"
+				".config/sysc-greet"
+				".config/KeePassXC"
+				".cache/noctalia"
 				".zen"
+
 			];
 			files = [
-				".config/zsh/.zsh_history"
 			];
 		};
 	};

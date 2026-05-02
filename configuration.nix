@@ -51,7 +51,7 @@
 	users.mutableUsers = lib.mkForce false;
 	users.users.aron = {
 		isNormalUser = true;
-		extraGroups = [ "wheel" "networkmanager" "docker" ];
+		extraGroups = [ "wheel" "networkmanager" "docker" "video" "audio"];
 		shell = pkgs.zsh;
 		hashedPasswordFile = "/persist/passwords/aron";
 	};
@@ -85,6 +85,7 @@
 	hardware.bluetooth.enable = true;
 	services.upower.enable = true;
 	services.power-profiles-daemon.enable = true;
+	services.throttled.enable = true;
 	services.xserver.videoDrivers = [ "nvidia" ];
 
 	# SYSTEM SERVICES
@@ -103,6 +104,10 @@
 	services.sysc-greet = {
 		enable = true;
 		compositor = "hyprland";
+		settings.initial_session = {
+			command = "Hyprland";
+			user = "aron";
+		};
 	};
 
 	xdg.portal = {
@@ -121,8 +126,16 @@
 		pciutils
 		usbutils
 		inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-		keepassxc
 		cloudflare-warp
+		bibata-cursors
+	];
+
+	fonts.packages = with pkgs; [
+		nerd-fonts.jetbrains-mono
+		nerd-fonts.fira-code
+		noto-fonts
+		noto-fonts-color-emoji
+		victor-mono
 	];
 
 	programs.zsh.enable = true;
