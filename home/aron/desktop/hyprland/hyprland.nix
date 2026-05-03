@@ -1,15 +1,5 @@
-{ pkgs, inputs, config, ... }:
+{ ... }:
 {
-  home.packages = with pkgs; [ hyprshot ];
-
-  catppuccin.hyprland.enable = true;
-
-  xdg.configFile = {
-    "hypr/keybindings.conf".source = ./hypr/keybindings.conf;
-    "hypr/window-rules.conf".source = ./hypr/window-rules.conf;
-    "hypr/autostart.conf".source = ./hypr/autostart.conf;
-  };
-
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -170,5 +160,11 @@
       source = $XDG_CONFIG_HOME/hypr/window-rules.conf
       source = $XDG_CONFIG_HOME/hypr/autostart.conf
     '';
+  };
+
+  xdg.configFile = {
+    "hypr/keybindings.conf".source = ./keybindings.conf;
+    "hypr/window-rules.conf".source = ./window-rules.conf;
+    "hypr/autostart.conf".source = ./autostart.conf;
   };
 }
