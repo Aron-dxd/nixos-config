@@ -21,12 +21,6 @@
 
     # CLI tools
     bat.enable = true;
-    fzf.enable = true;
-    lsd.enable = true;
-    yazi = {
-      enable = true;
-      shellWrapperName = "y";
-    };
 
     # Media
     mpv.enable = true;

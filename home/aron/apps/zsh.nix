@@ -1,8 +1,34 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
+  programs = {
+    zoxide.enable = true;
+    zoxide.enableZshIntegration = true;
+    
+    fzf.enable = true;
+    fzf.enableZshIntegration = true;
+
+    yazi = {
+      enable = true;
+      enableZshIntegration = true;
+      shellWrapperName = "y";
+    };
+    
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = {
+        style = "compact";
+	inline_height = 20;
+	show_preview = true;
+      };
+    };
+
+    lsd.enable = true;
+  };
+
   programs.zsh = {
     enable = true;
-    dotDir = "${config.xdg.configHome}/zsh";
+    dotDir = "${config.xdg.configHome}/zsh"; 
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
@@ -15,7 +41,7 @@
 
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
-      l = "lsd -l";
+      y = "yazi"; 
     };
 
     plugins = [
@@ -52,6 +78,7 @@
     ];
 
     initContent = ''
+      # Insert last word with Alt+.
       bindkey '\e.' insert-last-word
 
       # Esc Esc to prepend sudo
@@ -66,9 +93,14 @@
       zle -N sudo-command-line
       bindkey '\e\e' sudo-command-line
 
-      # history substring search keybindings
-      bindkey '^[[A' history-substring-search-up
-      bindkey '^[[B' history-substring-search-down
+      # Resilient History Substring Search Keybindings
+      # Using terminfo prevents the '^[[A' literal text glitch
+      if [[ -n "''${terminfo[kcuu1]}" ]]; then
+        bindkey "''${terminfo[kcuu1]}" history-substring-search-up
+      fi
+      if [[ -n "''${terminfo[kcud1]}" ]]; then
+        bindkey "''${terminfo[kcud1]}" history-substring-search-down
+      fi
     '';
   };
 }
