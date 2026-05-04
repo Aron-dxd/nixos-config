@@ -18,12 +18,11 @@
 
   programs = {
     # Shell and Terminal
-    kitty.enable = true;
-    fastfetch.enable = true;
 
     # CLI tools
     bat.enable = true;
     fzf.enable = true;
+    lsd.enable = true;
     yazi = {
       enable = true;
       shellWrapperName = "y";

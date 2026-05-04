@@ -156,9 +156,9 @@
     };
 
     extraConfig = ''
-      source = $XDG_CONFIG_HOME/hypr/keybindings.conf
-      source = $XDG_CONFIG_HOME/hypr/window-rules.conf
-      source = $XDG_CONFIG_HOME/hypr/autostart.conf
+      source = ~/.config/hypr/keybindings.conf
+      source = ~/.config/hypr/window-rules.conf
+      source = ~/.config/hypr/autostart.conf
     '';
   };
 
