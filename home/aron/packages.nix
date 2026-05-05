@@ -21,6 +21,7 @@
 
     # CLI tools
     bat.enable = true;
+    lsd.enable = true;
 
     # Media
     mpv.enable = true;

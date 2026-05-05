@@ -1,31 +1,5 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 {
-  programs = {
-    zoxide.enable = true;
-    zoxide.enableZshIntegration = true;
-    
-    fzf.enable = true;
-    fzf.enableZshIntegration = true;
-
-    yazi = {
-      enable = true;
-      enableZshIntegration = true;
-      shellWrapperName = "y";
-    };
-    
-    atuin = {
-      enable = true;
-      enableZshIntegration = true;
-      settings = {
-        style = "compact";
-	inline_height = 20;
-	show_preview = true;
-      };
-    };
-
-    lsd.enable = true;
-  };
-
   programs.zsh = {
     enable = true;
     dotDir = "${config.xdg.configHome}/zsh"; 
@@ -41,7 +15,6 @@
 
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
-      y = "yazi"; 
     };
 
     plugins = [
