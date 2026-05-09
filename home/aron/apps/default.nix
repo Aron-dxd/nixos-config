@@ -5,6 +5,6 @@
     ./tui
     ./terminals
     ./shells
-    ./browsers
+    #./browsers
   ];
 }

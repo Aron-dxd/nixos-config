@@ -5,6 +5,7 @@
     ./hardware.nix
     ./networking.nix
     ./impermanence.nix
+    ./stylix.nix
     ./desktop
     ./system
   ];

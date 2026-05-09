@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -19,10 +19,6 @@
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
         "NVD_BACKEND,direct"
         "MOZ_ENABLE_WAYLAND,1"
-        "HYPRCURSOR_THEME,Bibata-Modern-Classic"
-        "XCURSOR_THEME,Bibata-Modern-Classic"
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
         "AQ_NO_MODIFIERS,1"
       ];
 
@@ -30,8 +26,6 @@
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgba($blueAlphae6)";
-        "col.inactive_border" = "rgba($surface0Alphae6)";
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
@@ -46,7 +40,6 @@
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
         };
         blur = {
           enabled = true;
@@ -95,8 +88,6 @@
       };
 
       group = {
-        "col.border_active" = "rgba($blueAlphae6)";
-        "col.border_inactive" = "rgba($surface0Alphae6)";
         groupbar = {
           enabled = true;
           font_size = 10;
@@ -109,9 +100,6 @@
           indicator_gap = 2;
           gaps_in = 2;
           gaps_out = 2;
-          "col.active" = "rgba($overlay0Alphae6)";
-          "col.inactive" = "rgba($surface0Alphae6)";
-          text_color = "$text";
         };
       };
 

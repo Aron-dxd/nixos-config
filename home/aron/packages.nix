@@ -7,6 +7,7 @@
 
     # Media and Downloads
     ffmpeg
+    ffmpegthumbnailer
 
     # Desktop and Utilities
     wl-clipboard
@@ -41,9 +42,5 @@
     };
 
     home-manager.enable = true;
-  };
-
-  services = {
-    playerctld.enable = true;
   };
 }

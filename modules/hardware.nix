@@ -19,7 +19,7 @@
 
   # Connectivity
   hardware.bluetooth.enable = true;
-
+  hardware.opentabletdriver.enable = true;
   # Audio
   services.pipewire = {
     enable = true;

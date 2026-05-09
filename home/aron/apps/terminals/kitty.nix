@@ -2,10 +2,6 @@
 {
   programs.kitty = {
     enable = true;
-    font = {
-      size = 15.0;
-      name = "JetBrainsMono Nerd Font";
-    };
     settings = {
       strip_trailing_spaces = "smart";
       copy_on_select = "yes";
