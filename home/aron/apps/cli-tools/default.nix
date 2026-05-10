@@ -9,5 +9,6 @@
     ./fd.nix
     ./git.nix
     ./starship.nix
+    ./rclone.nix
   ];
 }

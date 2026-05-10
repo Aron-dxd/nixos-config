@@ -21,13 +21,18 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, stylix, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, impermanence, stylix, sops-nix, ... }@inputs: {
     nixosConfigurations.hiroshima = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
@@ -35,6 +40,7 @@
         ./hosts/hiroshima
         impermanence.nixosModules.impermanence
 	stylix.nixosModules.stylix
+	sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

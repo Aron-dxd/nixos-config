@@ -1,5 +1,12 @@
 { ... }:
-{
+{ 
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
   services.syncthing = {
     enable = true;
     user = "aron";

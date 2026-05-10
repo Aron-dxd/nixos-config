@@ -1,20 +1,41 @@
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # System and control
+    # Terminal and CLI
+    bc
+    tree
+    tmux
     brightnessctl
-    jq
+    wl-clipboard
+    wtype
+    xclip
+    inotify-tools
+  	
+    # System and Monitoring
+    btop
+
+    # File Management
+    thunar
+    tumbler
+    trash-cli
+    dust
 
     # Media and Downloads
     ffmpeg
     ffmpegthumbnailer
+    wf-recorder
+    eyedropper
+    crosspipe
+    qbittorrent
 
-    # Desktop and Utilities
-    wl-clipboard
-    wtype
+    # Development
+    rclone
+    code-cursor
 
     # Productivity and Information
-    thunar
+    anki-bin
+    tumbler
+    qalculate-gtk
   ];
 
   programs = {
@@ -23,17 +44,27 @@
     # CLI tools
     bat.enable = true;
     lsd.enable = true;
-
+    
     # Media
     mpv.enable = true;
     imv.enable = true;
     yt-dlp.enable = true;
     satty.enable = true;
+    cava.enable = true;
 
     # Development
+    jq.enable = true;
+    vscode.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
 
     # Secrets
     keepassxc.enable = true;
+
+    # Apps
+    vesktop.enable = true;
 
     # Hyprland
     hyprshot = {

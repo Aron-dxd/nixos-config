@@ -15,6 +15,8 @@
 
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
+
+      shell-sops = "nix-shell /etc/nixos/shells/sops.nix";
     };
 
     plugins = [

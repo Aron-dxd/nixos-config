@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   # Global Shell
   programs.zsh.enable = true;
@@ -9,9 +9,9 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "docker" "video" "audio" ];
     shell = pkgs.zsh;
-    hashedPasswordFile = "/persist/passwords/aron";
+    hashedPasswordFile = config.sops.secrets."aron-password".path;
   };
-  users.users.root.hashedPasswordFile = "/persist/passwords/root";
+  users.users.root.hashedPasswordFile = config.sops.secrets."root-password".path;
 
   # Disable Lecture
   security.sudo.extraConfig = ''

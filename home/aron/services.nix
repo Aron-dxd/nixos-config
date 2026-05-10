@@ -1,7 +1,7 @@
 { ... }:
 {
   services = {
-    tumbler.enable = true;
-    playerctd.enable = true;
-  }
+    playerctld.enable = true;
+    easyeffects.enable = true;
+  };
 }

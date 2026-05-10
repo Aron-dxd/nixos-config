@@ -25,8 +25,10 @@
     # System Specific
     bibata-cursors
 
-    # Global Packages
+    # Misc
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     android-tools
+    gvfs
+    xdg-user-dirs
   ];
 }
