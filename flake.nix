@@ -36,7 +36,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, impermanence, stylix, sops-nix, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, impermanence, stylix, sops-nix, ... }@inputs: {
     nixosConfigurations.hiroshima = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };

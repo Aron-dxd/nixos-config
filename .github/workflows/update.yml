@@ -1,0 +1,56 @@
+name: "Update flake inputs"
+
+on:
+  schedule:
+    - cron: "30 0 * * 5"  
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: "Lint (informational only)"
+    runs-on: ubuntu-latest
+    continue-on-error: true  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: statix
+        run: nix run nixpkgs#statix -- check .
+
+      - name: deadnix
+        run: nix run nixpkgs#deadnix -- --fail .
+
+  update-and-check:
+    name: "Update and evaluate flake"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Check flake health
+        uses: DeterminateSystems/flake-checker-action@main
+
+      - name: Evaluate hiroshima config
+        run: |
+          nix eval .#nixosConfigurations.hiroshima.config.system.build.toplevel \
+            --show-trace
+
+      - name: Commit updated flake.lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add flake.lock
+          git diff --staged --quiet || git commit -m "chore: update flake.lock"
+          git push
