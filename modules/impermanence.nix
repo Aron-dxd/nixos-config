@@ -32,14 +32,12 @@
 	"Music"
         ".ssh"
         ".zen"
-        ".local/share/keyrings"
         ".local/share/nvim"
         ".local/share/yazi"
         ".local/share/gnupg"
         ".local/share/applications"
         ".local/share/atuin"
 	".local/share/zoxide"
-        ".config/KeePassXC"
         # Noctalia keeps some data here for some reason
         ".cache/noctalia"
       ];

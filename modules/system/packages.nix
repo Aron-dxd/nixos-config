@@ -27,6 +27,7 @@
 
     # Misc
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.noctavox.packages.${pkgs.stdenv.hostPlatform.system}.default
     android-tools
     gvfs
     xdg-user-dirs
