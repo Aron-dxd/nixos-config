@@ -15,6 +15,7 @@
 
     shellAliases = {
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
+      dryact = "sudo nixos-rebuild dry-activate --flake /etc/nixos#hiroshima";
 
       shell-sops = "nix-shell /etc/nixos/shells/sops.nix";
     };

@@ -43,17 +43,19 @@
       modules = [
         ./hosts/hiroshima
         impermanence.nixosModules.impermanence
-	stylix.nixosModules.stylix
-	sops-nix.nixosModules.sops
+        stylix.nixosModules.stylix
+        sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.aron = {
-            imports = [
-              ./home/aron
-            ];
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            extraSpecialArgs = { inherit inputs; };
+            users.aron = {
+              imports = [
+                ./home/aron
+              ];
+            };
           };
         }
       ];

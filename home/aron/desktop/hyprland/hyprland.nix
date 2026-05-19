@@ -68,7 +68,6 @@
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
@@ -79,7 +78,6 @@
       misc = {
         force_default_wallpaper = 0;
         disable_hyprland_logo = false;
-        vfr = true;
         vrr = 2;
         mouse_move_enables_dpms = true;
         focus_on_activate = false;

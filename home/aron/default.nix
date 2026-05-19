@@ -9,8 +9,10 @@
     ./desktop
   ];
   
-  home.username = "aron";
-  home.homeDirectory = "/home/aron";
+  home = {
+    username = "aron";
+    homeDirectory = "/home/aron";
 
-  home.stateVersion = "25.11";
+    stateVersion = "25.11";
+  };
 }

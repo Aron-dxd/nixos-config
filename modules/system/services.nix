@@ -1,26 +1,30 @@
 { ... }:
 { 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
+  services = {
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
     };
-  };
-  services.syncthing = {
-    enable = true;
-    user = "aron";
-    dataDir = "/home/aron";
+    syncthing = {
+      enable = true;
+      user = "aron";
+      dataDir = "/home/aron";
+    };
+
+    atd.enable =  true;
   };
 
-  services.atd.enable =  true;
-
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = false;
-  };
-  virtualisation.libvirtd = {
-    enable = true;
-    onBoot = "ignore";
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = false;
+    };
+    libvirtd = {
+      enable = true;
+      onBoot = "ignore";
+    };
   };
 }

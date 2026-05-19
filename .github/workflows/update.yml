@@ -2,33 +2,16 @@ name: "Update flake inputs"
 
 on:
   schedule:
-    - cron: "30 0 * * 5"  
+    - cron: "30 0 * * 5"
   workflow_dispatch:
 
 jobs:
-  lint:
-    name: "Lint (informational only)"
-    runs-on: ubuntu-latest
-    continue-on-error: true  
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Nix
-        uses: DeterminateSystems/determinate-nix-action@v3
-
-      - name: statix
-        run: nix run nixpkgs#statix -- check .
-
-      - name: deadnix
-        run: nix run nixpkgs#deadnix -- --fail .
-
   update-and-check:
     name: "Update and evaluate flake"
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,21 +19,28 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/determinate-nix-action@v3
 
+      - name: Cache Nix store
+        uses: DeterminateSystems/magic-nix-cache-action@main
+
       - name: Update flake.lock
-        run: nix flake update
+        run: nix flake update --accept-flake-config
 
       - name: Check flake health
-        uses: DeterminateSystems/flake-checker-action@main
+        uses: DeterminateSystems/flake-checker-action@v9
 
-      - name: Evaluate hiroshima config
+      - name: Build hiroshima config
         run: |
-          nix eval .#nixosConfigurations.hiroshima.config.system.build.toplevel \
-            --show-trace
+          nix build .#nixosConfigurations.hiroshima.config.system.build.toplevel \
+            --no-link \
+            --show-trace \
+            --accept-flake-config
 
-      - name: Commit updated flake.lock
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add flake.lock
-          git diff --staged --quiet || git commit -m "chore: update flake.lock"
-          git push
+      - name: Open PR with updated flake.lock
+        if: success()
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "update flake.lock"
+          title: "update flake inputs"
+          body: "Automated flake input update. Build passed."
+          branch: flake-update/automated
+          delete-branch: true

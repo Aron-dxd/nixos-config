@@ -1,40 +1,50 @@
 { ... }:
 {
-  # Graphics and Nvidia
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    open = false;
-    nvidiaSettings = true;
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
+  hardware = {
+    # Graphics and Nvidia
+    graphics.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = true;
+      powerManagement.finegrained = true;
+      open = false;
+      nvidiaSettings = true;
+      prime = {
+        offload = {
+          enable = true;
+          enableOffloadCmd = true;
+        };
       };
     };
-  };
-  services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Connectivity
-  hardware.bluetooth.enable = true;
-  hardware.opentabletdriver.enable = true;
-  # Audio
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
+    # Connectivity
+    bluetooth.enable = true;
+    opentabletdriver.enable = true;
   };
 
-  # Power and Thermals
-  services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;
-  services.throttled.enable = true;
-  services.thermald.enable = true;
+  services = {
+    # Power and Thermals
+    upower.enable = true;
+    power-profiles-daemon.enable = true;
+    throttled.enable = true;
+    thermald.enable = true;
+
+    # Audio
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    
+    # Graphics
+    xserver.videoDrivers = [ "nvidia" ];
+  };
 
   # System Optimization
-  zramSwap.enable = true;
-  zramSwap.algorithm = "zstd";
+  zramSwap = {
+    enable = true;
+    memoryPercent = 150;
+    algorithm = "zstd";
+  };
 }

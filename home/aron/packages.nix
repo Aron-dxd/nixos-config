@@ -65,6 +65,8 @@
 
     # Apps
     vesktop.enable = true;
+    calibre.enable = true;
+    irssi.enable = true;
 
     # Hyprland
     hyprshot = {
