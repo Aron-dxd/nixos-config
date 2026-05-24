@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ./keepass.nix
+    ./hexchat
   ];
 }

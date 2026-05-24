@@ -28,11 +28,9 @@ jobs:
       - name: Check flake health
         uses: DeterminateSystems/flake-checker-action@v9
 
-      - name: Build hiroshima config
+      - name: Evaluate hiroshima configuration
         run: |
-          nix build .#nixosConfigurations.hiroshima.config.system.build.toplevel \
-            --no-link \
-            --show-trace \
+          nix eval .#nixosConfigurations.hiroshima.config.system.build.toplevel \
             --accept-flake-config
 
       - name: Open PR with updated flake.lock
@@ -41,6 +39,6 @@ jobs:
         with:
           commit-message: "update flake.lock"
           title: "update flake inputs"
-          body: "Automated flake input update. Build passed."
+          body: "Automated flake input update. Eval passed."
           branch: flake-update/automated
           delete-branch: true

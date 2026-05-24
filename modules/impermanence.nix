@@ -30,6 +30,7 @@
         "Pictures"
         "Videos"
 	"Music"
+	"Calibre_Library"
         ".ssh"
         ".zen"
         ".local/share/nvim"
@@ -38,6 +39,9 @@
         ".local/share/applications"
         ".local/share/atuin"
 	".local/share/zoxide"
+	".local/share/Anki2"
+	".config/keepassxc"
+	".config/calibre"
         # Noctalia keeps some data here for some reason
         ".cache/noctalia"
       ];

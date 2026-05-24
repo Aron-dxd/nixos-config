@@ -33,7 +33,7 @@
     code-cursor
 
     # Productivity and Information
-    anki-bin
+    anki
     tumbler
     qalculate-gtk
   ];
@@ -66,7 +66,6 @@
     # Apps
     vesktop.enable = true;
     calibre.enable = true;
-    irssi.enable = true;
 
     # Hyprland
     hyprshot = {
