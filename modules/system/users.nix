@@ -2,6 +2,7 @@
 {
   # Global Shell
   programs.zsh.enable = true;
+  programs.zsh.enableGlobalCompInit = false;
 
   # Users
   users= {
@@ -20,4 +21,9 @@
   security.sudo.extraConfig = ''
     		Defaults lecture = never
     	'';
+  #Enable sudo and login with fingerprint
+  security.pam.services = {
+    sudo.fprintAuth = true;
+    login.fprintAuth = true;
+  };
 }

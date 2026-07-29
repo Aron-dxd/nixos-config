@@ -14,6 +14,7 @@
     };
 
     shellAliases = {
+      test-run = "sudo nixos-rebuild test --flake /etc/nixos#hiroshima";
       rebuild = "sudo nixos-rebuild switch --flake /etc/nixos#hiroshima";
       dryact = "sudo nixos-rebuild dry-activate --flake /etc/nixos#hiroshima";
 

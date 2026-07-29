@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  boot = {
-	# Bootloader
+  boot = {	
+    # Bootloader
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;

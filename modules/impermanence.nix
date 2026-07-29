@@ -7,6 +7,8 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/bluetooth"
       "/var/lib/systemd/coredump"
+      "/var/lib/systemd/backlight"
+      "/var/lib/systemd/timers"
       "/var/lib/nixos"
       "/var/lib/docker"
       "/var/lib/NetworkManager"
@@ -33,6 +35,7 @@
 	"Calibre_Library"
         ".ssh"
         ".zen"
+	".local/state/wireplumber"
         ".local/share/nvim"
         ".local/share/yazi"
         ".local/share/gnupg"
@@ -42,10 +45,15 @@
 	".local/share/Anki2"
 	".config/keepassxc"
 	".config/calibre"
-        # Noctalia keeps some data here for some reason
-        ".cache/noctalia"
       ];
       files = [
+        ".config/zsh/.zcompdump"
+	".local/state/noctalia/instance.id"
+	".local/state/noctalia/state.toml"
+	".local/state/noctalia/recently_used.json"
+	".local/state/noctalia/screen_time.json"
+	".local/state/noctalia/usage_counts.json"
+	".config/niri/cast-indicator/blocklist"
       ];
     };
   };

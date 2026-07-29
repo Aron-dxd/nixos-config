@@ -67,12 +67,6 @@
     vesktop.enable = true;
     calibre.enable = true;
 
-    # Hyprland
-    hyprshot = {
-      enable = true;
-      saveLocation = "${config.home.homeDirectory}/Pictures/Screenshots";
-    };
-
     home-manager.enable = true;
   };
 }

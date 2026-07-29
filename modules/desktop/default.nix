@@ -2,6 +2,6 @@
 {
   imports = [
     ./greeter.nix
-    ./hyprland.nix
+    ./niri.nix
   ];
 }

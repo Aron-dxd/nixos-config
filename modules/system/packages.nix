@@ -10,6 +10,11 @@
     # Hardware / Kernel
     pciutils
     usbutils
+    evtest
+
+    #Audio
+    pulseaudio
+    bluez
 
     # Disk / Filesystem
     dosfstools
@@ -31,5 +36,6 @@
     android-tools
     gvfs
     xdg-user-dirs
+    spotiflac
   ];
 }

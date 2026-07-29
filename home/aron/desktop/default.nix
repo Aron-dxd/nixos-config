@@ -1,7 +1,8 @@
 { ... }:
 {
   imports = [
-    ./hyprland
-    ./noctalia.nix
+    ./niri
+    ./noctalia
+    ./niri-cast-indicator
   ];
 }
