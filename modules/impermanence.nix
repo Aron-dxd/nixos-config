@@ -47,7 +47,6 @@
 	".config/calibre"
       ];
       files = [
-        ".config/zsh/.zcompdump"
 	".local/state/noctalia/instance.id"
 	".local/state/noctalia/state.toml"
 	".local/state/noctalia/recently_used.json"

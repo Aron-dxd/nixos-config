@@ -2,7 +2,10 @@
 {
   hardware = {
     # Graphics and Nvidia
-    graphics.enable = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
     nvidia = {
       modesetting.enable = true;
       powerManagement.enable = true;

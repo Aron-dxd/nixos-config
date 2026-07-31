@@ -36,6 +36,9 @@
     anki
     tumbler
     qalculate-gtk
+
+    # Misc
+    opentabletdriver
   ];
 
   programs = {
@@ -58,6 +61,7 @@
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      enableZshIntegration = true;
     };
 
     # Secrets
