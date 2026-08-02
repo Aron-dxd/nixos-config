@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +39,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, impermanence, stylix, sops-nix, ... }@inputs: {
+  outputs = { nixpkgs, nix-cachyos-kernel, home-manager, impermanence, stylix, sops-nix, ... }@inputs: {
     nixosConfigurations.hiroshima = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };

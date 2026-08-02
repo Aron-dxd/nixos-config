@@ -1,10 +1,8 @@
 name: "Update flake inputs"
-
 on:
   schedule:
     - cron: "30 0 * * 5"
   workflow_dispatch:
-
 jobs:
   update-and-check:
     name: "Update and evaluate flake"
@@ -22,16 +20,22 @@ jobs:
       - name: Cache Nix store
         uses: DeterminateSystems/magic-nix-cache-action@main
 
+      - name: Configure binary caches
+        run: |
+          echo "extra-substituters = https://nix-community.cachix.org https://noctalia.cachix.org https://attic.xuyh0120.win/lantian" | sudo tee -a /etc/nix/nix.conf
+          echo "extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4= lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" | sudo tee -a /etc/nix/nix.conf
+
       - name: Update flake.lock
         run: nix flake update --accept-flake-config
 
       - name: Check flake health
         uses: DeterminateSystems/flake-checker-action@v9
 
-      - name: Evaluate hiroshima configuration
+      - name: Build hiroshima configuration
+        id: build
         run: |
-          nix eval .#nixosConfigurations.hiroshima.config.system.build.toplevel \
-            --accept-flake-config
+          nix build .#nixosConfigurations.hiroshima.config.system.build.toplevel \
+            --accept-flake-config --no-link
 
       - name: Open PR with updated flake.lock
         if: success()
@@ -39,6 +43,16 @@ jobs:
         with:
           commit-message: "update flake.lock"
           title: "update flake inputs"
-          body: "Automated flake input update. Eval passed."
+          body: "Automated flake input update. Build passed."
           branch: flake-update/automated
           delete-branch: true
+
+      - name: Notify on failure
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "flake update failed: ${{ github.run_id }}"
+          content-filepath: /dev/null
+          body: |
+            The scheduled flake update/build failed for hiroshima.
+            See run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

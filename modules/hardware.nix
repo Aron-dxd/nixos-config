@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   hardware = {
     # Graphics and Nvidia
@@ -7,6 +7,7 @@
       enable32Bit = true;
     };
     nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
       modesetting.enable = true;
       powerManagement.enable = true;
       powerManagement.finegrained = true;

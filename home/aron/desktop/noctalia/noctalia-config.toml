@@ -508,7 +508,6 @@ widget_order = [ "lockscreen-login-box@eDP-1" ]
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
 
 [network]
 bluetoothAutoConnect = true
@@ -845,12 +844,14 @@ hide_inactive = true
 
 [widget.ram]
 show_label = false
+show_value = false
 
 [widget.sysmon]
-show_label = false
+show_value = false
 
 [widget.temp]
 show_label = false
+show_value = false
 
 [widget.toggle]
 type = "cleboost/hotspot:toggle"

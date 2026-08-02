@@ -78,6 +78,13 @@
       if [[ -n "''${terminfo[kcud1]}" ]]; then
         bindkey "''${terminfo[kcud1]}" history-substring-search-down
       fi
+
+      use-flake() {
+	[[ -f flake.nix ]] || touch flake.nix
+	nvim flake.nix
+        echo "use flake" > .envrc
+	direnv allow
+      }
     '';
   };
 }

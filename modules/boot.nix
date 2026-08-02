@@ -1,5 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs , ... }:
 {
+  nixpkgs.overlays = [
+    inputs.nix-cachyos-kernel.overlays.pinned
+  ];
+
   boot = {	
     # Bootloader
     loader = {
@@ -10,7 +14,12 @@
 
     # Extra Kernel Parameters
     kernelParams = [ "nvidia-drm.modeset=1" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelModules = ["tcp_bbr"];
+    kernel.sysctl = {
+      "net.ipv4.tcp_congestion_control" = "bbr";
+      "net.core.default_qdisc" = "cake";
+    };
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-x86_64-v3;
 
     # Rollback Script for Impermanence
     initrd = {
