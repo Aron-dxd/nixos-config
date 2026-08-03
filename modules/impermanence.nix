@@ -45,9 +45,11 @@
 	".local/share/Anki2"
 	".config/keepassxc"
 	".config/calibre"
+	".local/state/noctalia/plugins"
       ];
       files = [
 	".local/state/noctalia/instance.id"
+	".local/state/noctalia/.setup-complete"
 	".local/state/noctalia/state.toml"
 	".local/state/noctalia/recently_used.json"
 	".local/state/noctalia/screen_time.json"

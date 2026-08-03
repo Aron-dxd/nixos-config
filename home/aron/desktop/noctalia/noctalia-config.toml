@@ -110,7 +110,7 @@ widgetSpacing = 6
         enabled = true
         fill = "surface_variant"
         id = "g3"
-        members = [ "widget_2", "volume", "brightness" ]
+        members = [ "widget_2", "brightness" ]
         opacity = 1.0
         padding = 6.0
 
@@ -592,7 +592,7 @@ panel_placement = "floating"
 
 [plugins]
 autoUpdate = true
-enabled = [ "kenn/keybind-cheatsheet", "noctalia/bongocat", "blackbartblues/audio-switcher" ]
+enabled = [ "kenn/keybind-cheatsheet", "noctalia/bongocat", "blackbartblues/audio-switcher", "noctalia/world_clock" ]
 notifyUpdates = true
 
 [sessionMenu]
@@ -825,6 +825,12 @@ anchor = true
 format = "{:%H:%M • %d %b}"
 tooltip_format = "{:A, %d %B %Y}\\n{:%H:%M:%S} • Local Time\\n\\nWeek {:%V} of {:%Y}\\nDay {:%j} of the year\\nTimezone:{:%Z}"
 
+    [widget.clock.actions]
+    right = "panel-toggle noctalia/world_clock:panel"
+
+[widget.launcher.actions]
+right = "panel-toggle kenn/keybind-cheatsheet:cheatsheet"
+
 [widget.media]
 hide_when_no_media = true
 title_scroll = "on_hover"
@@ -867,5 +873,9 @@ enabled = true
 type = "blackbartblues/audio-switcher:widget"
 
 [widget.widget_2]
-enabled = false
+enabled = true
 type = "blackbartblues/audio-switcher:widget"
+
+    [widget.widget_2.actions]
+    scroll_down = "volume-down"
+    scroll_up = "volume-up"
